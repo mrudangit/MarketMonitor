@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MarketDataService } from './services/market-data.service';
 
 @Component({
   selector: 'trader-desktop-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'market-monitor';
+  constructor(private marketDataService: MarketDataService){
+
+  }
 }
