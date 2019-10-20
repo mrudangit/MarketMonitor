@@ -22,7 +22,8 @@
               "apps/market-monitor/src/assets"
             ],
             "styles": ["apps/market-monitor/src/styles.css"],
-            "scripts": []
+            "scripts": [],
+            "webWorkerTsConfig": "apps/market-monitor/tsconfig.worker.json"
           },
           "configurations": {
             "production": {
@@ -78,7 +79,8 @@
           "options": {
             "tsConfig": [
               "apps/market-monitor/tsconfig.app.json",
-              "apps/market-monitor/tsconfig.spec.json"
+              "apps/market-monitor/tsconfig.spec.json",
+              "apps/market-monitor/tsconfig.worker.json"
             ],
             "exclude": ["**/node_modules/**", "!apps/market-monitor/**"]
           }
