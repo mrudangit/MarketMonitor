@@ -12,27 +12,42 @@ export class MarketDataService {
   private webSocketClient: WebSocket;
   private sharedBuffer: SharedArrayBuffer;
   private sharedBufferView: DataView;
+  private loginInfo: ClientLoginInfo = new ClientLoginInfo();
 
 
 
   constructor() {
-    ByteBuffer.DEFAULT_ENDIAN = true;
-    this.sharedBuffer =  new SharedArrayBuffer(216);
-    this.sharedBufferView = new DataView(this.sharedBuffer);
+
+    this.loginInfo.sendMarketDataUpdates = true;
+    this.createSharedBuffer();
 
     postMessage({msgType:WorkerMessageEnum.SHARED_BUFFER_SNAPSHOT, payLoad: this.sharedBuffer}, null);
+
+    this.initializeWebSocket();
+  }
+
+  private initializeWebSocket(){
+
     this.webSocketClient = new WebSocket(this.marketDataServer);
     this.webSocketClient.binaryType = 'arraybuffer';
     this.webSocketClient.addEventListener('message', (event) => {
       this.processIncomingWebSocketData(event);
     });
     this.webSocketClient.addEventListener('open', (event) => {
-    this.connectedToServer(event);
+      this.connectedToServer(event);
     });
 
     this.webSocketClient.onclose = (event) => {
       this.connectionLost(event);
     }
+
+  }
+
+  private createSharedBuffer(){
+
+    this.sharedBuffer = new SharedArrayBuffer(this.loginInfo.marketDataSnapShotSize*MarketData.SIZE);
+    this.sharedBufferView = new DataView(this.sharedBuffer);
+
   }
 
 
@@ -48,10 +63,8 @@ export class MarketDataService {
 
     console.log('Connected to WebSocket Server : ', event);
 
-    const loginInfo = new ClientLoginInfo();
-    loginInfo.sendMarketDataUpdates = true;
 
-    this.webSocketClient.send(JSON.stringify(loginInfo));
+    this.webSocketClient.send(JSON.stringify(this.loginInfo));
 
   }
 

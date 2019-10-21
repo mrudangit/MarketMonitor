@@ -4,6 +4,36 @@ import { BufferUtils } from './BufferUtils';
 export class MarketData {
 
   public static SIZE: 216;
+
+  public static SYMBOL_OFFSET=0;
+  public static SYMBOL_ID_OFFSET=40;
+  public static MID_OFFSET=48;
+
+  public static ASKPRICE0_OFFSET=56;
+  public static ASKPRICE1_OFFSET=64;
+  public static ASKPRICE2_OFFSET=72;
+  public static ASKPRICE3_OFFSET=80;
+  public static ASKPRICE4_OFFSET=88;
+
+  public static BIDPRICE0_OFFSET=96;
+  public static BIDPRICE1_OFFSET=104;
+  public static BIDPRICE2_OFFSET=112;
+  public static BIDPRICE3_OFFSET=120;
+  public static BIDPRICE4_OFFSET=128;
+
+  public static ASKSIZE0_OFFSET=136;
+  public static ASKSIZE1_OFFSET=144;
+  public static ASKSIZE2_OFFSET=152;
+  public static ASKSIZE3_OFFSET=160;
+  public static ASKSIZE4_OFFSET=168;
+
+
+  public static BIDSIZE0_OFFSET=176;
+  public static BIDSIZE1_OFFSET=184;
+  public static BIDSIZE2_OFFSET=192;
+  public static BIDSIZE3_OFFSET=200;
+  public static BIDSIZE4_OFFSET=208;
+
   public symbol: string;
   public symbolId: bigint;
   public mid: number;
@@ -13,11 +43,11 @@ export class MarketData {
   public askPrice3: number;
   public askPrice4: number;
 
-  public askSize0: number;
-  public askSize1: number;
-  public askSize2: number;
-  public askSize3: number;
-  public askSize4: number;
+  public askSize0: bigint;
+  public askSize1: bigint;
+  public askSize2: bigint;
+  public askSize3: bigint;
+  public askSize4: bigint;
 
 
   public bidPrice0: number;
@@ -26,11 +56,11 @@ export class MarketData {
   public bidPrice3: number;
   public bidPrice4: number;
 
-  public bidSize0: number;
-  public bidSize1: number;
-  public bidSize2: number;
-  public bidSize3: number;
-  public bidSize4: number;
+  public bidSize0: bigint;
+  public bidSize1: bigint;
+  public bidSize2: bigint;
+  public bidSize3: bigint;
+  public bidSize4: bigint;
   private dataView: DataView;
 
 
@@ -60,8 +90,34 @@ export class MarketData {
 
 
     this.symbol = BufferUtils.BufferToStringASCII(this.dataView.buffer,40);
-    this.symbolId = this.dataView.getBigInt64(40, true);
-    this.mid = this.dataView.getFloat64(48, true);
+    this.symbolId = this.dataView.getBigInt64(MarketData.SYMBOL_ID_OFFSET, true);
+    this.mid = this.dataView.getFloat64(MarketData.MID_OFFSET, true);
+
+    this.askPrice0 = this.dataView.getFloat64(MarketData.ASKPRICE0_OFFSET, true);
+    this.askPrice1 = this.dataView.getFloat64(MarketData.ASKPRICE1_OFFSET, true);
+    this.askPrice2 = this.dataView.getFloat64(MarketData.ASKPRICE2_OFFSET, true);
+    this.askPrice3 = this.dataView.getFloat64(MarketData.ASKPRICE3_OFFSET, true);
+    this.askPrice4 = this.dataView.getFloat64(MarketData.ASKPRICE4_OFFSET, true);
+
+    this.bidPrice0 = this.dataView.getFloat64(MarketData.BIDPRICE0_OFFSET, true);
+    this.bidPrice1 = this.dataView.getFloat64(MarketData.BIDPRICE1_OFFSET, true);
+    this.bidPrice2 = this.dataView.getFloat64(MarketData.BIDPRICE2_OFFSET, true);
+    this.bidPrice3 = this.dataView.getFloat64(MarketData.BIDPRICE3_OFFSET, true);
+    this.bidPrice4 = this.dataView.getFloat64(MarketData.BIDPRICE4_OFFSET, true);
+
+    this.askSize0 = this.dataView.getBigInt64(MarketData.ASKSIZE0_OFFSET, true);
+    this.askSize1= this.dataView.getBigInt64(MarketData.ASKSIZE1_OFFSET, true);
+    this.askSize2 = this.dataView.getBigInt64(MarketData.ASKSIZE2_OFFSET, true);
+    this.askSize3 = this.dataView.getBigInt64(MarketData.ASKSIZE3_OFFSET, true);
+    this.askSize4 = this.dataView.getBigInt64(MarketData.ASKSIZE4_OFFSET, true);
+
+    this.bidSize0 = this.dataView.getBigInt64(MarketData.BIDSIZE0_OFFSET, true);
+    this.bidSize1 = this.dataView.getBigInt64(MarketData.BIDSIZE1_OFFSET, true);
+    this.bidSize2 = this.dataView.getBigInt64(MarketData.BIDSIZE2_OFFSET, true);
+    this.bidSize3 = this.dataView.getBigInt64(MarketData.BIDSIZE3_OFFSET, true);
+    this.bidSize4 = this.dataView.getBigInt64(MarketData.BIDSIZE4_OFFSET, true);
+
+
 
   }
 
