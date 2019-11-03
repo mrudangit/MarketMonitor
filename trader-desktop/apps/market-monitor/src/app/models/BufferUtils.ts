@@ -5,8 +5,8 @@ export class BufferUtils {
 
 
 
-  public static BufferToStringASCII(buffer: ArrayBuffer, length: number){
-    const src = new Uint8Array(buffer, 0, length);
+  public static BufferToStringASCII(buffer: ArrayBuffer,offset:number, length: number){
+    const src = new Uint8Array(buffer, offset, length);
     const dst = [];
 
     for(let i=0;i < src.length;i++){

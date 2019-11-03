@@ -13,12 +13,14 @@ export class MarketDataService {
   private sharedBuffer: SharedArrayBuffer;
   private sharedBufferView: DataView;
   private loginInfo: ClientLoginInfo = new ClientLoginInfo();
+  private sharedBufferViewArray: Uint8Array;
 
 
 
   constructor() {
 
     this.loginInfo.sendMarketDataUpdates = true;
+    this.loginInfo.numOfMarketDataRecords = 10;
     this.createSharedBuffer();
 
     postMessage({msgType:WorkerMessageEnum.SHARED_BUFFER_SNAPSHOT, payLoad: this.sharedBuffer}, null);
@@ -46,6 +48,7 @@ export class MarketDataService {
   private createSharedBuffer(){
 
     this.sharedBuffer = new SharedArrayBuffer(this.loginInfo.marketDataSnapShotSize*MarketData.SIZE);
+    this.sharedBufferViewArray = new Uint8Array(this.sharedBuffer);
     this.sharedBufferView = new DataView(this.sharedBuffer);
 
   }
@@ -70,14 +73,33 @@ export class MarketDataService {
 
   private processIncomingWebSocketData(event: MessageEvent) {
 
-    const buffer: Int8Array = new Int8Array(event.data);
+    const rawBuffer: ArrayBuffer = event.data;
 
-    for(let i=0;i< buffer.byteLength;i++){
-      this.sharedBufferView.setInt8(i,buffer[i],);
+    if(rawBuffer.byteLength === this.sharedBuffer.byteLength){
+
+      const ubuffer  = new Uint8Array(event.data);
+      this.sharedBufferViewArray.set(ubuffer);
+
+    } else {
+      const dataView = new DataView(rawBuffer);
+      const numOfUpdates = rawBuffer.byteLength/ MarketData.SIZE;
+
+      for(let i=0; i < numOfUpdates;i++ ){
+
+        const index = dataView.getInt32(i*MarketData.SIZE,true);
+
+        const buffer1 = new Uint8Array(rawBuffer,i*MarketData.SIZE, MarketData.SIZE);
+
+        this.sharedBufferViewArray.set(buffer1, index*MarketData.SIZE);
+      }
+
+
+
     }
 
 
-    postMessage({msgType: WorkerMessageEnum.SHARED_BUFFER_UPDATE, payLoad: null}, null);
+
+    // postMessage({msgType: WorkerMessageEnum.SHARED_BUFFER_UPDATE, payLoad: null}, null);
 
 
 

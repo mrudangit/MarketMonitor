@@ -2,11 +2,11 @@ export class ClientLoginInfo {
 
 
   public sendMarketDataSnapShot = true;
-  public sendMarketDataUpdates = false;
+  public sendMarketDataUpdates = true;
   public numOfMarketDataRecords = 1;
-  public updatePercentage  = 100;
-  public marketDataSnapShotSize = 1;
-  public updateFrequency = 1000;
+  public updatePercentage  = 50;
+  public marketDataSnapShotSize = 10000;
+  public updateFrequency = 200;
 
 
   public sendOrders = false;
