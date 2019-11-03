@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import { MarketData } from './models/MarketData';
 import { WorkerMessage, WorkerMessageEnum } from './models/WorkerMessage';
 import {AgGridAngular} from "ag-grid-angular";
+import {ClientLoginInfo} from "./models/ClientLoginInfo";
 
 @Component({
   selector: 'trader-desktop-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   lastRow: number;
   totalDisplayedRows: number;
   numOfRecords: number;
+  clientLoginInfo = new ClientLoginInfo();
 
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
 
@@ -91,7 +93,7 @@ export class AppComponent {
 
     this.timerHandle = setInterval(() => {
       this.refreshMarketData();
-    },200)
+    }, this.clientLoginInfo.updateFrequency);
   }
 
 

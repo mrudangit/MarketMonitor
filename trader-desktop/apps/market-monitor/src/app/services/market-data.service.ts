@@ -12,15 +12,13 @@ export class MarketDataService {
   private webSocketClient: WebSocket;
   private sharedBuffer: SharedArrayBuffer;
   private sharedBufferView: DataView;
-  private loginInfo: ClientLoginInfo = new ClientLoginInfo();
+  public loginInfo: ClientLoginInfo = new ClientLoginInfo();
   private sharedBufferViewArray: Uint8Array;
 
 
 
   constructor() {
 
-    this.loginInfo.sendMarketDataUpdates = true;
-    this.loginInfo.numOfMarketDataRecords = 10;
     this.createSharedBuffer();
 
     postMessage({msgType:WorkerMessageEnum.SHARED_BUFFER_SNAPSHOT, payLoad: this.sharedBuffer}, null);
