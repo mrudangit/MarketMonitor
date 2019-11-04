@@ -1,8 +1,6 @@
 import { ClientLoginInfo } from '../models/ClientLoginInfo';
 
-
-import * as ByteBuffer from 'bytebuffer';
-import { WorkerMessage, WorkerMessageEnum } from '../models/WorkerMessage';
+import {  WorkerMessageEnum } from '../models/WorkerMessage';
 import { MarketData } from '../models/MarketData';
 
 declare var window;
@@ -14,6 +12,8 @@ export class MarketDataService {
   private sharedBufferView: DataView;
   public loginInfo: ClientLoginInfo = new ClientLoginInfo();
   private sharedBufferViewArray: Uint8Array;
+  public numberOfBytesRx = 0;
+  private timerHandle: any;
 
 
 
@@ -67,11 +67,19 @@ export class MarketDataService {
 
     this.webSocketClient.send(JSON.stringify(this.loginInfo));
 
+    this.timerHandle = setInterval(() => {
+      const numOfMbPerSecond = (this.numberOfBytesRx/1024)/1024;
+      console.log('Number of MB per Second : ', numOfMbPerSecond);
+      this.numberOfBytesRx =  0;
+    },1000)
+
   }
 
   private processIncomingWebSocketData(event: MessageEvent) {
 
     const rawBuffer: ArrayBuffer = event.data;
+
+    this.numberOfBytesRx = this.numberOfBytesRx + rawBuffer.byteLength;
 
     if(rawBuffer.byteLength === this.sharedBuffer.byteLength){
 
