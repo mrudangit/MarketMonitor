@@ -5,7 +5,7 @@ export class ClientLoginInfo {
   public sendMarketDataUpdates = true;
   public numOfMarketDataRecords = 1;
   public updatePercentage  = 25;
-  public marketDataSnapShotSize = 100000;
+  public marketDataSnapShotSize = 10000;
   public updateFrequency = 200;
 
 

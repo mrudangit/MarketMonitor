@@ -1,7 +1,10 @@
 <div style="width: 100%">
 
+  <h1 style="text-align: center">MB Per Second : {{mbPerSecond}}</h1>
   <h1 style="text-align: center">Market Data Monitor {{numOfRecords | number}}</h1>
   <h1 style="text-align: center">First Row : {{firstRow}} Last Row : {{lastRow}}</h1>
+
+
   <button (click)="startSubscribing($event)">START</button>
   <button (click)="stopSubscribing($event)">STOP</button>
 

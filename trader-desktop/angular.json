@@ -16,7 +16,7 @@
             "main": "apps/market-monitor/src/main.ts",
             "polyfills": "apps/market-monitor/src/polyfills.ts",
             "tsConfig": "apps/market-monitor/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/market-monitor/src/favicon.ico",
               "apps/market-monitor/src/assets",
@@ -42,7 +42,6 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",

@@ -59,10 +59,11 @@ export class AppComponent {
     {headerName: 'RevisionID', field: 'revisionId'}
   ];
   private timerHandle: any;
+  mbPerSecond: number;
 
   constructor(){
 
-    this.messagingWorker =  new Worker('./webWorker/messaging.worker.ts', {name:'messaging', type: 'module' });
+    this.messagingWorker =  new Worker(new URL('./webWorker/messaging.worker.ts',import.meta.url), {name:'messaging', type: 'module' });
 
     this.messagingWorker.addEventListener('message', ev => {
       this.processMessage(ev);
@@ -90,6 +91,14 @@ export class AppComponent {
     if( workerMessage.msgType === WorkerMessageEnum.SHARED_BUFFER_SNAPSHOT) {
       this.handleMarketDataSnapshot(workerMessage);
     }
+
+
+    if( workerMessage.msgType === WorkerMessageEnum.MB_PER_SECOND) {
+      this.mbPerSecond = workerMessage.payLoad.mb;
+      console.log('In Main App : MB Per Second : ', workerMessage.payLoad.mb);
+    }
+
+
 
     this.timerHandle = setInterval(() => {
       this.refreshMarketData();

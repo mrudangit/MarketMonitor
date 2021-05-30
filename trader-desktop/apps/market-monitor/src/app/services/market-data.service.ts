@@ -69,7 +69,8 @@ export class MarketDataService {
 
     this.timerHandle = setInterval(() => {
       const numOfMbPerSecond = (this.numberOfBytesRx/1024)/1024;
-      console.log('Number of MB per Second : ', numOfMbPerSecond);
+      // console.log('Number of MB per Second : ', numOfMbPerSecond);
+      postMessage({msgType:WorkerMessageEnum.MB_PER_SECOND, payLoad: {mb: numOfMbPerSecond}}, null);
       this.numberOfBytesRx =  0;
     },1000)
 

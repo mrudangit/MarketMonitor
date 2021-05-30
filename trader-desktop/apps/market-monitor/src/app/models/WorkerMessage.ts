@@ -1,7 +1,8 @@
 export enum WorkerMessageEnum {
 
   SHARED_BUFFER_SNAPSHOT,
-  SHARED_BUFFER_UPDATE
+  SHARED_BUFFER_UPDATE,
+  MB_PER_SECOND
 
 }
 
