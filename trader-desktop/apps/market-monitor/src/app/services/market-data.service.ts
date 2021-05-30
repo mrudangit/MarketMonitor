@@ -100,6 +100,5 @@ export class MarketDataService {
       }
 
     }
-
   }
 }
