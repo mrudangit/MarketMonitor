@@ -126,7 +126,7 @@ export class AppComponent {
         this.marketDataMap.set(value.index, value);
       });
 
-      this.agGrid.api.updateRowData({add: this.marketDataList});
+      this.agGrid.api.applyTransaction({add: this.marketDataList});
 
   }
 
