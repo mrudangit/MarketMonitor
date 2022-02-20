@@ -1,9 +1,11 @@
 <div style="width: 100%">
 
-  <h1 style="text-align: center">MB Per Second : {{mbPerSecond}}</h1>
-  <h1 style="text-align: center">Market Data Monitor {{numOfRecords | number}}</h1>
-  <h1 style="text-align: center">First Row : {{firstRow}} Last Row : {{lastRow}}</h1>
-
+  <div style="display: flex; padding: 2px">
+  <h1 style="text-align: center; margin: 2px">MB Per Second : {{mbPerSecond | number}}</h1>
+  <h1 style="text-align: center; margin: 2px">Market Data Monitor {{numOfRecords | number}}</h1>
+  <h1 style="
+  text-align: center; margin: 2px">First Row : {{firstRow}} Last Row : {{lastRow}}</h1>
+  </div>
 
   <button (click)="startSubscribing($event)">START</button>
   <button (click)="stopSubscribing($event)">STOP</button>
@@ -12,7 +14,7 @@
   <ag-grid-angular
       #agGrid
 
-      style="width: auto; height:calc(100vh - 200px);"
+      style="height:calc(100vh - 200px);"
       class="ag-theme-balham-dark"
       [enableCellChangeFlash]="false"
       [rowData]="rowData"

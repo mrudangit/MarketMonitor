@@ -3,7 +3,7 @@ import { MarketData } from './models/MarketData';
 import { WorkerMessage, WorkerMessageEnum } from './models/WorkerMessage';
 import {AgGridAngular} from "ag-grid-angular";
 import {ClientLoginInfo} from "./models/ClientLoginInfo";
-
+declare let crossOriginIsolated;
 @Component({
   selector: 'trader-desktop-root',
   templateUrl: './app.component.html',
@@ -74,6 +74,11 @@ export class AppComponent {
   startSubscribing($event: MouseEvent) {
     if (typeof  window !== undefined){
       console.log('We are in Main App');
+    }
+    if (!crossOriginIsolated) {
+
+      console.log('Cross Origin Isolated is FALSE');
+
     }
     this.messagingWorker.postMessage('start');
   }
